@@ -4,16 +4,16 @@
 
 using namespace std;
 
-vector<pair<int, int>> Relation; // Decleareing the Variable..
-vector<int> set_A;
-vector<int> set_B;
+vector<pair<string, string>> Relation; // Decleareing the Variable..
+vector<string> set_A;
+vector<string> set_B;
 int nA, nB, nR;
 bool flag = false, Identity_rela = false, Reflexive_rela = false, Symmetric_rela = false, Transitive_rela = false;
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-bool Search_pair(int a,int b) // These Function find if there is any pair (b,a) present in the Relation.
+bool Search_pair(string a,string b) // These Function find if there is any pair (b,a) present in the Relation.
 {
     for(int i = 0;i < nR;i++)
     {
@@ -23,7 +23,7 @@ bool Search_pair(int a,int b) // These Function find if there is any pair (b,a) 
     return false;
 }
 
-bool Ele_finder(int a) // This Function Check if the Function is present in their Respective Sets...s
+bool Ele_finder(string a) // This Function Check if the Function is present in their Respective Sets...s
 {
     for(int i = 0;i < nA;i++)
     {
@@ -34,7 +34,7 @@ bool Ele_finder(int a) // This Function Check if the Function is present in thei
     
 }
 
-bool Pair_Finder(int a, int b, int index)
+bool Pair_Finder(string a, string b, int index)
 {
     // This Function find the Pair in the Given Relation and helps in checking if the Relation doesn't have duplicate pairs..
 
@@ -51,21 +51,21 @@ bool Pair_Finder(int a, int b, int index)
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 int main()
-{
+{ 
     // Input Part for All set involved....
     cout << "Enter the Cardinality of Set A : ";
     cin >> nA;
 
     cout << "Enter the Elements of the set A : ";
-    for(int i = 0;i < nA;i++) {
-        int temp; cin >> temp;
+    for(int i = 0;i < nA;i++) 
+    {
+        string temp; cin >> temp;
         set_A.push_back(temp);
     }
 
     nB = nA;
-    for(int i = 0;i < nB;i++) {
+    for(int i = 0;i < nB;i++) 
         set_B.push_back(set_A[i]);
-    }
     // End of Input for all  Set Involved...
 
     cout << "Enter the Cardinality of Relation(R) : ";
@@ -81,17 +81,16 @@ int main()
     cout << "\nAnd give the input of the Relation in Roaster Format\n{(a,b),(b,c),....} : ";
     for(int i = 0;i < nR;i++)
     {
-        int first, second; cin >> first >> second; 
+        string first, second; cin >> first >> second; 
         Relation.push_back(make_pair(first, second));
     }
 
     // Printing the Relation these has input....
     cout << "{ ";
     for(int i = 0;i < nR;i++)
-    {
         cout << "("<<Relation.at(i).first << "," << Relation.at(i).second << ") ";
-    }
     cout << "}\n";
+
     /// End for Printing the Relation..
     ///////////////////////////////////////////////////////////////////////////////////////////
 
@@ -109,7 +108,7 @@ int main()
     // Relation is define from A -> B;
     for(int i = 0;i < nR;i++)
     {
-        int Ele = Relation.at(i).first;
+        string Ele = Relation.at(i).first;
         if(!Ele_finder(Ele))
         {
             cout << "Relation is improper.\nAs Element " << Ele << " is not in Set A!!!!\n";
@@ -118,8 +117,8 @@ int main()
     }
     for(int i = 0;i < nR;i++)
     {
-        int Ele = Relation.at(i).second;
-        if(!(Ele))
+        string Ele = Relation.at(i).second;
+        if(!Ele_finder(Ele))
         {
             cout << "Relation is improper.\nAs Element " << Ele << " is not in Set A!!!!\n";
             return 0;
@@ -129,16 +128,16 @@ int main()
     // Checking for the Repetation of the Pair in the Relation..
     for(int i = 0;i < nR;i++)
     {
-        int a = Relation.at(i).first;
-        int b = Relation.at(i).second;
+        string a = Relation.at(i).first;
+        string b = Relation.at(i).second;
 
         if(Pair_Finder(a,b,i))
         {
             cout << "Relation is improper.\nAs Pair (" << a << "," << b << ") is  Repeated.\n";
             return 0;
         }
+    
     }
-
     ///// End For checking for a Valid Relation...
     ///////////////////////////////////////////////////////////////////////////////////////////
 
@@ -146,11 +145,11 @@ int main()
     ///////////////////////////////////////////////////////////////////////////////////////////
     // testing for Identity Relation...
     cout << "\n\n";
-    for(int i = 0; i < nR;i++)
+    for(int i = 0;i < nA;i++)
     {
-        int a = Relation.at(i).first;
-        int b = Relation.at(i).second;
-        if(a != b) {
+        string a = set_A[i];
+        if(!Search_pair(a, a))
+        {
             flag = true;
             cout << "Non-Identity Relation.\n";
             break;
@@ -170,8 +169,8 @@ int main()
     ///////////////////////////////////////////////////////////////////////////////////////////
     for(int i = 0;i < nR;i++)
     {
-        int a = Relation.at(i).first;
-        int b = Relation.at(i).second;
+        string a = Relation.at(i).first;
+        string b = Relation.at(i).second;
 
         if(!Search_pair(b,a))
         {
@@ -200,7 +199,7 @@ int main()
     else {
         for(int i = 0;i < nA;i++)
         {
-            int a = set_A.at(i);
+            string a = set_A.at(i);
             if(!Search_pair(a, a))
             {
                 cout << "Non-Reflexive Relation.\n";
@@ -225,12 +224,12 @@ int main()
     
     for(int i = 0;i < Relation.size();i++)
     {
-        int a1 = Relation.at(i).first;
-        int b1 = Relation.at(i).second;
+        string a1 = Relation.at(i).first;
+        string b1 = Relation.at(i).second;
         for(int i = 0;i < Relation.size();i++)
         {
-            int a2 = Relation.at(i).first;
-            int b2 = Relation.at(i).second;
+            string a2 = Relation.at(i).first;
+            string b2 = Relation.at(i).second;
             if(b1 == a2)
             {
                 if(!Search_pair(a1, b2))
